@@ -1,0 +1,9 @@
+<h1 id="api-data"></h1>
+
+<script>
+  const axiosRequest = async () => {
+    return await axios.get("http://localhost:3001/webpagedata");
+  }
+  
+  document.querySelector("#api-data").innerHTML = axiosRequest();
+</script>
