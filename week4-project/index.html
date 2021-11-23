@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Calculator</title>
+        <link rel="stylesheet" type="text/css" href="style.css" />
+    </head>
+    <body>
+        <div class="calculator">
+            <div class="header">
+                <h1 id="value"></h1>
+            </div>
+            <div class="body">
+                <button id="button-ArrowLeft" class="calculator-button calculator-extra" onclick="back()">&lt;</button>
+                <button id="button-ArrowRight" class="calculator-button calculator-extra" onclick="front()">&gt;</button>
+                <button id="button-c" class="calculator-button calculator-extra" onclick="clearVal()">C</button>
+                <button id="button-Backspace" class="calculator-button calculator-extra" onclick="del()">⌫</button>
+                <br>
+                <button id="button-7" class="calculator-button calculator-number" onclick="number(7)">7</button>
+                <button id="button-8" class="calculator-button calculator-number" onclick="number(8)">8</button>
+                <button id="button-9" class="calculator-button calculator-number" onclick="number(9)">9</button>
+                <button id="button-/" class="calculator-button calculator-operation" onclick="number('/')">/</button>
+                <br>
+                <button id="button-4" class="calculator-button calculator-number" onclick="number(4)">4</button>
+                <button id="button-5" class="calculator-button calculator-number" onclick="number(5)">5</button>
+                <button id="button-6" class="calculator-button calculator-number" onclick="number(6)">6</button>
+                <button id="button-*" class="calculator-button calculator-operation" onclick="number('*')">*</button>
+                <br>
+                <button id="button-1" class="calculator-button calculator-number" onclick="number(1)">1</button>
+                <button id="button-2" class="calculator-button calculator-number" onclick="number(2)">2</button>
+                <button id="button-3" class="calculator-button calculator-number" onclick="number(3)">3</button>
+                <button id="button--" class="calculator-button calculator-operation" onclick="number('-')">-</button>
+                <br>
+                <button id="button-0" class="calculator-button calculator-number" onclick="number(0)">0</button>
+                <button id="button-." class="calculator-button calculator-number" onclick="number('.')">.</button>
+                <button id="button-Enter" class="calculator-button calculator-operation" onclick="calculate()">=</button>
+                <button id="button-+" class="calculator-button calculator-operation" onclick="number('+')">+</button>
+            </div> 
+        </div>
+        <script>
+            value = "";
+            cursor = 0;
+            keys = {
+                "0": "0",
+                "1": "1",
+                "2": "2",
+                "3": "3",
+                "4": "4",
+                "5": "5",
+                "6": "6",
+                "7": "7",
+                "8": "8",
+                "9": "9",
+                ".": ".",
+                "/": "/",
+                "*": "*",
+                "x": "*",
+                "-": "-",
+                "+": "+",
+                "=": "Enter",
+                "Enter": "Enter",
+                "ArrowLeft": "ArrowLeft",
+                "ArrowRight": "ArrowRight",
+                "c": "c",
+                "Backspace": "Backspace",
+                
+            }
+            function number(num) {
+                value += num;
+                cursor = 0;
+                updateValue(value);
+            }
+            function del() {
+                if(value == "ERROR") {
+                    clearVal();
+                } else {
+                    value = value.substring(0, value.length - 1);
+                    updateValue(value);
+                }
+            }
+            function clearVal() {
+                value = "";
+                updateValue(value);
+            }
+            function updateValue(val) {
+                if(val.length > 11) {
+                    if(cursor != 0 && value.length - cursor != 11) {
+                        document.getElementById("value").innerHTML = "..." + val.substring(val.length - 11 - cursor, val.length - cursor) + "...";
+                    } else if(value.length - cursor != 11) {
+                        document.getElementById("value").innerHTML = "..." + val.substring(val.length - 11 - cursor, val.length - cursor);
+                    } else {
+                        document.getElementById("value").innerHTML = val.substring(val.length - 11 - cursor, val.length - cursor) + "...";
+                    }
+                } else {
+                    document.getElementById("value").innerHTML = val;
+                }
+            }
+            function calculate() {
+                try {
+                    value = eval(value).toString();
+                    cursor = value.length - 11;
+                } catch(err) {
+                    value = "ERROR";
+                }
+                updateValue(value);
+            }
+
+            function front() {
+                if(cursor > 0) {
+                    cursor--;
+                    updateValue(value);
+                }
+            }
+
+            function back() {
+                if(cursor < value.length - 11) {
+                    cursor++;
+                    updateValue(value);
+                }
+            }
+
+            document.addEventListener('keyup', keyHandler);
+
+            function keyHandler(e) {
+                console.log(keys[e.key]);
+                if(keys[e.key] != null) {
+                    document.getElementById("button-" + keys[e.key]).click();
+                }
+            }
+        </script>
+    </body>
+</html>
