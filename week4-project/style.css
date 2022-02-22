@@ -15,7 +15,7 @@ body {
 }
 
 .calculator {
-  box-shadow: 0 10px 29px 0 #383535;
+  box-shadow: 0 10px 29px 0 #000000;
   width: calc(100% - 30px);
   height: calc(100% - 30px);
   max-width: 400px;
